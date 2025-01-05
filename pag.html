@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Gerenciamento</title>
+    <link rel="stylesheet" href="designer.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Biblioteca para gráficos -->
+</head>
+
+<body>
+
+    <!-- Barra de Navegação com Abas -->
+    <header>
+        <nav class="navbar">
+            <ul>
+                <li><a href="#" id="graficoTab">Gráfico de Vendedores</a></li>
+                <li><a href="#" id="produtosTab">Cadastrar Produtos</a></li>
+                <li><a href="#" id="vendasTab">Cadastrar Vendas</a></li>
+                <li><a href="#" id="clientesTab">Cadastrar Clientes</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main>
+        <!-- Seção de Gráfico de Vendedores (inicial) -->
+        <section id="graficoContent" class="content-section">
+            <h2>Desempenho dos Vendedores</h2>
+            <canvas id="graficoVendedores"></canvas>
+
+            <div class="dashboard">
+                <!-- Quadradinhos de Informações -->
+                <div class="info-box">
+                    <h3>Meta do Mês</h3>
+                    <p>R$ 50.000,00</p>
+                </div>
+                <div class="info-box">
+                    <h3>Produtos Vendidos</h3>
+                    <p id="totalUnidades">350 unidades</p> <!-- Total de unidades vendidas -->
+                </div>
+                <div class="info-box">
+                    <h3>Novos Vendedores</h3>
+                    <p>5 vendedores</p>
+                </div>
+                <div class="info-box" id="totalVendasBox">
+                    <h3>Total de Vendas</h3>
+                    <p id="totalVendas">0 transações</p> <!-- Total de transações -->
+                </div>
+            </div>
+
+            <!-- Formulário para atualizar as vendas -->
+            <div class="vendas-alteracao">
+                <h3>Alterar Quantidade de Vendas e Unidades Vendidas</h3>
+                <div>
+                    <label for="vendedorA">ArtCap (Total):</label>
+                    <input type="number" id="vendedorA" value="20">
+                    <label for="unidadesA">Unidades Vendidas:</label>
+                    <input type="number" id="unidadesA" value="200">
+                </div>
+                <div>
+                    <label for="vendedorB">Seuboné (Total):</label>
+                    <input type="number" id="vendedorB" value="45">
+                    <label for="unidadesB">Unidades Vendidas:</label>
+                    <input type="number" id="unidadesB" value="450">
+                </div>
+                <div>
+                    <label for="vendedorC">Ravi (Total):</label>
+                    <input type="number" id="vendedorC" value="50">
+                    <label for="unidadesC">Unidades Vendidas:</label>
+                    <input type="number" id="unidadesC" value="500">
+                </div>
+                <div>
+                    <label for="vendedorD">Leonardo (Total):</label>
+                    <input type="number" id="vendedorD" value="40">
+                    <label for="unidadesD">Unidades Vendidas:</label>
+                    <input type="number" id="unidadesD" value="400">
+                </div>
+                <div>
+                    <label for="vendedorD">Shop Bonés (Total):</label>
+                    <input type="number" id="vendedorD" value="40">
+                    <label for="unidadesD">Unidades Vendidas:</label>
+                    <input type="number" id="unidadesD" value="400">
+                </div>
+
+                <div>
+                    <label for="vendedorD">Enecaps (Total):</label>
+                    <input type="number" id="vendedorD" value="40">
+                    <label for="unidadesD">Unidades Vendidas:</label>
+                    <input type="number" id="unidadesD" value="400">
+                </div>
+                <button id="atualizarVendas">Atualizar Vendas</button>
+            </div>
+        </section>
+
+
+
+
+        <!-- Seção de Cadastro de Produtos -->
+        <section id="produtosContent" class="content-section" style="display: none;">
+            <h2>Cadastrar Produto</h2>
+            <form id="formProduto">
+                <label for="nomeProduto">Nome do Produto:</label>
+                <input type="text" id="nomeProduto" placeholder="Nome do Produto*" required>
+                
+                <label for="precoProduto">Preço do Produto:</label>
+                <input type="number" id="precoProduto" placeholder="R$" required>
+                
+                <label for="quantidadeProduto">Quantidade:</label>
+                <input type="number" id="quantidadeProduto" placeholder="Quantidade*" required>
+                
+                <label for="descricaoProduto">Descreva o Produto:</label>
+                <input type="text" id="descricaoProduto" placeholder="Descrição*" required>
+                
+                <button type="submit">Cadastrar Produto</button>
+            </form>
+        </section>
+        
+
+        <!-- Seção de Cadastro de Vendas -->
+        <section id="vendasContent" class="content-section" style="display: none;">
+            <h2>Cadastrar Venda</h2>
+            <form id="formVenda">
+                <label for="vendedor">Nome do Vendedor:</label>
+                <input type="text" id="vendedor" placeholder="Nome do Vendedor" required>
+        
+                <label for="cliente">Nome do Cliente:</label>
+                <input type="text" id="cliente" placeholder="Nome do Cliente" required>
+        
+                <label for="produtoVenda">Produto:</label>
+                <select id="produtoVenda" onchange="atualizarTotal()">
+                    <option value="">Selecione um Produto</option>
+                    <option value="50" data-quantidade="10">Produto A - R$ 50,00</option>
+                    <option value="30" data-quantidade="20">Produto B - R$ 30,00</option>
+                    <option value="70" data-quantidade="5">Produto C - R$ 70,00</option>
+                    <option value="40" data-quantidade="15">Produto D - R$ 40,00</option>
+                    <option value="60" data-quantidade="8">Produto E - R$ 60,00</option>
+                </select>
+        
+                <label for="quantidadeVenda">Quantidade:</label>
+                <input type="number" id="quantidadeVenda" placeholder="Quantidade Vendida" required oninput="atualizarTotal()">
+        
+                <div class="price">Total a pagar: R$ 0,00</div>
+        
+                <label for="formaPagamento">Forma de Pagamento:</label>
+                <select id="formaPagamento" required>
+                    <option value="cartao">Cartão de Crédito</option>
+                    <option value="dinheiro">Dinheiro</option>
+                    <option value="pix">PIX</option>
+                </select>
+        
+                <button type="submit">Registrar Venda</button>
+            </form>
+        
+            <div class="log">
+                <h3>Nota Fiscal</h3>
+                <ul class="notes"></ul>
+            </div>
+        </section>
+
+        <!-- Seção de Cadastro de Clientes -->
+        <section id="clientesContent" class="content-section" style="display: none;">
+            <h2>Cadastrar Cliente</h2>
+            <form id="formCliente">
+                <label for="nomeCliente">Nome do Cliente:</label>
+                <input type="text" id="nomeCliente" placeholder="Nome do Cliente" required>
+        
+                <label for="emailCliente">Email:</label>
+                <input type="email" id="emailCliente" placeholder="Email do Cliente" required>
+        
+                <label for="dataNascimentoCliente">Data de Nascimento:</label>
+                <input type="date" id="dataNascimentoCliente" required>
+        
+                <label for="cpfCliente">CPF:</label>
+                <input type="text" id="cpfCliente" placeholder="XXX.XXX.XXX-XX" required pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Digite o CPF no formato XXX.XXX.XXX-XX">
+        
+                <label for="enderecoCliente">Endereço:</label>
+                <textarea id="enderecoCliente" placeholder="Digite o Endereço" required></textarea>
+        
+                <button type="submit">Cadastrar Cliente</button>
+            </form>
+        </section>
+        
+    </main>
+    <div id="notification-container"></div>
+    <script src="script.js"></script> <!-- Arquivo JavaScript com a lógica -->
+</body>
+
+</html>
